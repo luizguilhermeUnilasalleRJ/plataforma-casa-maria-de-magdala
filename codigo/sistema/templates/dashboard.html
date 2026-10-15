@@ -1,15 +1,122 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
+
 <head>
-    <title>Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Acesso a Sistemas</title>
+
+    <link rel="stylesheet" href="{% static 'css/sistema.css' %}">
 </head>
+
 <body>
 
-    <h1>Dashboard</h1>
+    <header class="barra-institucional">
+        <div class="container barra-conteudo">
+            <span>Maria de Magdala — Área Restrita</span>
+            <span class="ambiente">Ambiente de Produção</span>
+        </div>
+    </header>
 
-    <p>Login realizado com sucesso!</p>
+    <nav class="navegacao">
+        <div class="container nav-conteudo">
 
-    <p>Bem-vindo ao sistema da Casa Maria de Magdala.</p>
+            <div class="logo">
+
+                <div class="logo-caixa"></div>
+
+                <span>
+                    Magdala
+                    <span class="logo-secundario">/ PORTAL</span>
+                </span>
+
+            </div>
+
+            <div class="usuario">
+
+                <div class="usuario-icone">◉</div>
+
+                <span>
+                    {{ request.user.username }}
+                </span>
+
+            </div>
+
+        </div>
+    </nav>
+
+    <main>
+
+        <section class="hero container">
+
+            <h1>Acessos</h1>
+
+        </section>
+
+        <div class="divisor container"></div>
+
+        <section class="destaques container">
+
+            <div class="cards">
+
+                <button onclick="window.location.href = '{% url 'cadastrar_pessoa' %}'" >
+                    Cadastro de pessoas
+                </button>
+
+                <button>-</button>
+                <button>-</button>
+                <button class="destaque">-</button>
+                <button>-</button>
+
+                <button>-</button>
+                <button>-</button>
+                <button>-</button>
+                <button>-</button>
+                <button>-</button>
+
+                <button>-</button>
+                <button>-</button>
+                <button>-</button>
+                <button>-</button>
+                <button>-</button>
+
+                <button>-</button>
+                <button>-</button>
+                <button>-</button>
+                <button>-</button>
+                <button>-</button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+
+        <div class="container footer-conteudo">
+
+            <p>
+                © 2024 Portal Corporativo.
+                Todos os direitos reservados.
+                Ambiente de acesso restrito e monitorado.
+            </p>
+
+            <div class="links-footer">
+
+                <a href="#">Política de Privacidade</a>
+                <a href="#">Suporte</a>
+                <a href="#">Termos de Uso</a>
+
+            </div>
+
+        </div>
+
+    </footer>
 
 </body>
+
 </html>

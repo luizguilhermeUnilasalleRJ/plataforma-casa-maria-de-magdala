@@ -12,5 +12,5 @@ class Pessoa (models.Model):
     estado_civil = models.CharField(max_length = 30)
     endereco = models.CharField(max_length = 260, blank = True)
     data_entrada = models.DateField()
-    origen_cadastro = models.CharField(max_length = 20)
+    origem_cadastro = models.CharField(max_length = 20)
 

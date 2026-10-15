@@ -1,27 +1,133 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html>
+
+<html lang="pt-br">
+
 <head>
-    <title>Login</title>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Área Restrita</title>
+
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+
 </head>
+
+
 <body>
 
-    <h1>Login do Sistema</h1>
+    <main class="pagina-login">
 
-    <form method="POST">
-        {% csrf_token %}
 
-        <label>Usuário:</label>
-        <input type="text" name="username">
 
-        <br><br>
 
-        <label>Senha:</label>
-        <input type="password" name="password">
+        <section class="area-login">
 
-        <br><br>
+            <div class="conteudo-login">
 
-        <button type="submit">Entrar</button>
-    </form>
+
+
+                <div class="indicador"></div>
+
+
+
+
+                <h1>
+                    Área Restrita
+                </h1>
+
+
+
+
+                <form
+                    method="POST"
+                    class="formulario-login"
+                >
+
+
+                    {% csrf_token %}
+
+
+
+                    <div class="campo">
+
+                        <label for="usuario">
+                            Usuário
+                        </label>
+
+                        <input
+                            type="text"
+                            id="usuario"
+                            name="username"
+                            autocomplete="username"
+                        >
+
+                    </div>
+
+
+
+
+                    <div class="campo">
+
+                        <div class="senha-cabecalho">
+
+                            <label for="senha">
+                                Senha
+                            </label>
+
+                            <button
+                                type="button"
+                                class="mostrar-senha"
+                            >
+                                ◉&nbsp; Esconder
+                            </button>
+
+                        </div>
+
+
+                        <input
+                            type="password"
+                            id="senha"
+                            name="password"
+                            autocomplete="current-password"
+                        >
+
+                    </div>
+
+
+
+                    <button
+                        type="submit"
+                        class="botao-acessar"
+                    >
+                        Acessar
+                    </button>
+
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+
+        <section class="area-visual">
+
+            <img
+                src=""
+                alt="alguma coisa"
+            >
+
+        </section>
+
+
+    </main>
 
 </body>
+
 </html>

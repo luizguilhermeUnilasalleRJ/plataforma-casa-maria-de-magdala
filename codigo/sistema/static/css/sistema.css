@@ -1,0 +1,419 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --azul-900: #0b2559;
+    --azul-800: #123a86;
+    --azul-700: #1a4fb4;
+    --azul-600: #2563d6;
+    --azul-500: #3b76e8;
+
+    --azul-claro: #eef3fd;
+
+    --texto: #293241;
+    --texto-secundario: #5b6472;
+
+    --borda: #e3e8f0;
+    --branco: #ffffff;
+    --fundo: #fbfcfe;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--texto);
+    background-color: var(--fundo);
+}
+
+
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+
+
+.barra-institucional {
+    width: 100%;
+    height: 44px;
+    background-color: var(--azul-900);
+    color: var(--branco);
+}
+
+.barra-conteudo {
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.barra-conteudo span {
+    opacity: 0.8;
+}
+
+
+.navegacao {
+    background-color: var(--branco);
+    border-bottom: 1px solid var(--borda);
+}
+
+.nav-conteudo {
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    color: var(--azul-900);
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.logo-caixa {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 6px;
+    background-color: var(--azul-700);
+
+    color: white;
+    font-weight: bold;
+}
+
+.logo-secundario {
+    color: var(--texto-secundario);
+    font-weight: normal;
+}
+
+.usuario {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: var(--texto-secundario);
+    font-size: 14px;
+}
+
+.usuario-icone {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background-color: var(--azul-claro);
+    border: 1px solid var(--borda);
+
+    color: var(--azul-700);
+}
+
+
+
+.hero {
+    padding-top: 55px;
+    padding-bottom: 40px;
+}
+
+.hero h1,
+.destaques h2 {
+    text-align: center;
+    text-transform: uppercase;
+
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.hero h1 {
+    font-size: 32px;
+}
+
+.subtitulo {
+    margin-top: 8px;
+
+    text-align: center;
+
+    color: var(--texto-secundario);
+    font-size: 15px;
+}
+
+
+.icones-sistemas {
+    margin-top: 45px;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 40px 65px;
+}
+
+.sistema {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 12px;
+
+    text-decoration: none;
+    color: var(--texto-secundario);
+
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+
+
+.divisor {
+    height: 1px;
+    background-color: var(--borda);
+}
+
+
+
+.destaques {
+    padding-top: 55px;
+    padding-bottom: 60px;
+}
+
+.destaques h2 {
+    font-size: 25px;
+}
+
+
+
+.cards {
+    margin-top: 35px;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 16px;
+}
+
+.cards button {
+  
+    width: calc(20% - 13px);
+
+    min-height: 90px;
+
+    padding: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+
+    background-color: white;
+
+    color: var(--azul-700);
+
+    font-size: 15px;
+    font-weight: 600;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 1px 2px rgba(16, 24, 40, 0.04);
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        border-color 0.18s ease,
+        background-color 0.18s ease;
+}
+
+.cards button:hover {
+    transform: translateY(-3px);
+
+    border-color: var(--azul-500);
+
+    background-color: var(--azul-claro);
+
+    box-shadow:
+        0 10px 22px -6px rgba(37, 99, 214, 0.28);
+}
+
+.cards .destaque {
+    border-color: var(--azul-600);
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 214, 0.14),
+        0 10px 24px -6px rgba(37, 99, 214, 0.35);
+
+    font-weight: bold;
+}
+
+
+
+footer {
+    border-top: 1px solid var(--borda);
+    background-color: white;
+}
+
+.footer-conteudo {
+    min-height: 100px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+}
+
+.footer-conteudo p {
+    color: var(--texto-secundario);
+    font-size: 12px;
+}
+
+.links-footer {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.links-footer a {
+    color: var(--texto-secundario);
+
+    font-size: 12px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.links-footer a:hover {
+    color: var(--azul-700);
+}
+
+
+
+@media (max-width: 900px) {
+
+    .container {
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+
+    .icones-sistemas {
+        gap: 35px 45px;
+    }
+
+    .cards button {
+        width: calc(33.333% - 11px);
+    }
+
+    .footer-conteudo {
+        flex-direction: column;
+        justify-content: center;
+
+        padding-top: 25px;
+        padding-bottom: 25px;
+
+        text-align: center;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .container {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .ambiente {
+        display: none;
+    }
+
+    .usuario span {
+        display: none;
+    }
+
+    .hero {
+        padding-top: 40px;
+    }
+
+    .hero h1 {
+        font-size: 24px;
+    }
+
+    .subtitulo {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .icones-sistemas {
+        gap: 30px 25px;
+    }
+
+    .icone-circulo {
+        width: 65px;
+        height: 65px;
+
+        font-size: 24px;
+    }
+
+    .sistema {
+        font-size: 10px;
+    }
+
+    .destaques {
+        padding-top: 40px;
+    }
+
+    .destaques h2 {
+        font-size: 21px;
+    }
+
+  
+
+    .cards {
+        gap: 12px;
+    }
+
+    .cards button {
+        width: calc(50% - 6px);
+
+        min-height: 80px;
+
+        padding: 10px;
+
+        font-size: 13px;
+    }
+
+    .links-footer {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
