@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da solicitação</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/solicitacoes.css' %}">
+</head>
+<body>
+    <main>
+        <h1>Detalhes da solicitação</h1>
+
+        <section>
+            <h2>Dados pessoais</h2>
+
+            <p><strong>Nome completo:</strong> {{ solicitacao.nome }}</p>
+            <p><strong>Data de nascimento:</strong> {{ solicitacao.data_nascimento|date:"d/m/Y" }}</p>
+            <p><strong>CPF:</strong> {{ solicitacao.cpf }}</p>
+            <p><strong>Telefone:</strong> {{ solicitacao.telefone }}</p>
+            <p><strong>E-mail:</strong> {{ solicitacao.email|default:"Não informado" }}</p>
+            <p><strong>Nome do responsável:</strong> {{ solicitacao.nome_responsavel|default:"Não informado" }}</p>
+            <p><strong>Estado civil:</strong> {{ solicitacao.get_estado_civil_display }}</p>
+            <p><strong>Endereço:</strong> {{ solicitacao.endereco|default:"Não informado" }}</p>
+        </section>
+
+        <section>
+            <h2>Informações da solicitação</h2>
+
+            <p><strong>Data de envio:</strong> {{ solicitacao.data_solicitacao|date:"d/m/Y H:i" }}</p>
+            <p><strong>Status:</strong> {{ solicitacao.get_status_display }}</p>
+        </section>
+
+        {% if solicitacao.status == 'pendente' %}
+            <section>
+                <h2>Análise da solicitação</h2>
+
+                <div class="actions">
+                    <form method="POST" action="{% url 'aprovar_solicitacao' solicitacao.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="button-approve">
+                            Aprovar solicitação
+                        </button>
+                    </form>
+
+                    <form method="POST" action="{% url 'recusar_solicitacao' solicitacao.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="button-reject">
+                            Recusar solicitação
+                        </button>
+                    </form>
+                </div>
+            </section>
+        {% else %}
+            <p>Esta solicitação já foi analisada.</p>
+        {% endif %}
+
+        <a href="{% url 'listar_solicitacoes' %}" class="back-link">
+            Voltar para solicitações
+        </a>
+    </main>
+</body>
+</html>

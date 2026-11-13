@@ -1,0 +1,260 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Detalhes do paciente | Casa Maria de Magdala</title>
+
+    <link rel="stylesheet" href="{% static 'css/lista.css' %}">
+</head>
+<body>
+
+    <header class="cabecalho">
+        <div>
+            <h1>Casa Maria de Magdala</h1>
+            <p>Sistema de gerenciamento</p>
+        </div>
+
+        <a href="{% url 'dashboard' %}" class="botao-voltar">
+            Voltar ao painel
+        </a>
+    </header>
+
+    <main class="conteudo">
+
+        {% if messages %}
+            <div class="mensagens">
+                {% for message in messages %}
+                    <div class="mensagem {{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <section class="titulo-pagina">
+            <div>
+                <h2>Detalhes do paciente</h2>
+                <p>Informações completas do cadastro selecionado.</p>
+            </div>
+
+            <div class="grupo-botoes">
+                <a href="{% url 'listar_pessoas' %}" class="botao-cadastrar">
+                    Voltar à lista
+                </a>
+
+                <a href="{% url 'editar_pessoa' pessoa.id %}" class="botao-editar">
+                    Editar cadastro
+                </a>
+
+                <form method="POST" action="{% url 'alterar_status_pessoa' pessoa.id %}"
+                      onsubmit="return confirm('Tem certeza que deseja alterar o status desse cadastro?');">
+
+                    {% csrf_token %}
+
+                    <button type="submit" class = 'botao-status'>
+                        {% if pessoa.ativo %}
+                            Inativar cadastro
+                        {% else %}
+                            Reativar cadastro
+                        {% endif %}
+                    </button>
+                </form>
+
+            </div>
+
+        </section>
+
+        <section class="cartao">
+
+            <div class="detalhes-grid">
+                <div>
+                    <strong>Nome completo</strong>
+                    <p>{{ pessoa.nome }}</p>
+                </div>
+
+                <div>
+                    <strong>Data de nascimento</strong>
+                    <p>{{ pessoa.data_nascimento|date:"d/m/Y" }}</p>
+                </div>
+
+                <div>
+                    <strong>CPF</strong>
+                    <p>{{ pessoa.cpf }}</p>
+                </div>
+
+                <div>
+                    <strong>Telefone</strong>
+                    <p>{{ pessoa.telefone }}</p>
+                </div>
+
+                <div>
+                    <strong>Nome do responsável</strong>
+                    <p>{{ pessoa.nome_responsavel|default:"Não informado" }}</p>
+                </div>
+
+                <div>
+                    <strong>Estado civil</strong>
+                    <p>{{ pessoa.estado_civil }}</p>
+                </div>
+
+                <div>
+                    <strong>Endereço</strong>
+                    <p>{{ pessoa.endereco|default:"Não informado" }}</p>
+                </div>
+
+                <div>
+                    <strong>Data de entrada</strong>
+                    <p>{{ pessoa.data_entrada|date:"d/m/Y" }}</p>
+                </div>
+
+                <div>
+                    <strong>Origem do cadastro</strong>
+                    <p>{{ pessoa.origem_cadastro }}</p>
+                </div>
+            </div>
+
+        </section>
+
+                <section class="cartao historico-atendimentos">
+
+            <div class="titulo-pagina">
+                <div>
+                    <h2>Histórico de atendimentos</h2>
+                    <p>Registros de atendimentos realizados para esta pessoa.</p>
+                </div>
+
+                {% if pessoa.ativo %}
+                    <a href="{% url 'cadastrar_atendimento' %}" class="botao-cadastrar">
+                        Novo atendimento
+                    </a>
+                {% endif %}
+            </div>
+
+            {% if atendimentos %}
+                <div class="tabela-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Modalidade</th>
+                                <th>Observações</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for atendimento in atendimentos %}
+                                <tr>
+                                    <td>{{ atendimento.data_atendimento|date:"d/m/Y" }}</td>
+
+                                    <td>
+                                        {{ atendimento.get_modalidade_display }}
+                                    </td>
+
+                                    <td>
+                                        {{ atendimento.observacoes|default:"Sem observações" }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            {% else %}
+                <p>Não existem atendimentos registrados para esta pessoa.</p>
+            {% endif %}
+
+        </section>
+
+        <section class="cartao historico-acompanhamentos">
+
+            <div class="historico-cabecalho">
+                <div>
+                    <h2>Histórico de acompanhamentos</h2>
+                    <p>Especialidades frequentadas e situação dos acompanhamentos.</p>
+                </div>
+
+                {% if pessoa.ativo %}
+                    <a href="{% url 'cadastrar_acompanhamento' %}" class="botao-cadastrar">
+                        Novo acompanhamento
+                    </a>
+                {% endif %}
+            </div>
+
+            {% if acompanhamentos %}
+
+                <div class="acompanhamentos-lista">
+
+                    {% for acompanhamento in acompanhamentos %}
+
+                        <article class="acompanhamento-item">
+
+                            <div class="acompanhamento-titulo">
+                                <h3>{{ acompanhamento.especialidades.nome }}</h3>
+
+                                {% if acompanhamento.data_alta %}
+                                    <span class="status-acompanhamento encerrado">
+                                        Encerrado
+                                    </span>
+                                {% else %}
+                                    <span class="status-acompanhamento andamento">
+                                        Em andamento
+                                    </span>
+                                {% endif %}
+                            </div>
+
+                            <div class="acompanhamento-dados">
+
+                                <div>
+                                    <strong>Categoria</strong>
+                                    <p>{{ acompanhamento.especialidades.get_categoria_display }}</p>
+                                </div>
+
+                                <div>
+                                    <strong>Data de início</strong>
+                                    <p>{{ acompanhamento.data_inicio|date:"d/m/Y" }}</p>
+                                </div>
+
+                                <div>
+                                    <strong>Data de alta</strong>
+                                    <p>
+                                        {% if acompanhamento.data_alta %}
+                                            {{ acompanhamento.data_alta|date:"d/m/Y" }}
+                                        {% else %}
+                                            Não houve alta
+                                        {% endif %}
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            {% if acompanhamento.observacoes %}
+                                <div class="acompanhamento-observacoes">
+                                    <strong>Observações</strong>
+                                    <p>{{ acompanhamento.observacoes }}</p>
+                                </div>
+                            {% endif %}
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="sem-registros">
+                    Nenhum acompanhamento registrado para esta pessoa.
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Novo atendimento | Maria de Magdala{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/formularios.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="hero container">
+    <h1>Novo atendimento</h1>
+    <p>Registre um atendimento realizado pela instituição.</p>
+</section>
+
+<div class="divisor container"></div>
+
+<section class="formulario-container">
+
+    <h2>Dados do atendimento</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <div class="formulario-acoes">
+            <button type="submit" class="botao-salvar">
+                Salvar atendimento
+            </button>
+
+            <a class="formulario-voltar" href="{% url 'dashboard' %}">
+                Voltar ao painel
+            </a>
+        </div>
+    </form>
+
+</section>
+
+{% endblock %}

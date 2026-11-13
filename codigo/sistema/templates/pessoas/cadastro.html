@@ -14,6 +14,67 @@
 
 <body>
 
+<div class="notificacoes" aria-live="polite">
+
+    {% for message in messages %}
+        <div class="notificacao {{ message.tags }}" role="status">
+            <span class="notificacao-icone">
+                {% if 'success' in message.tags %}
+                    ✓
+                {% else %}
+                    !
+                {% endif %}
+            </span>
+
+            <div class="notificacao-conteudo">
+                <strong>
+                    {% if 'success' in message.tags %}
+                        Sucesso
+                    {% else %}
+                        Atenção
+                    {% endif %}
+                </strong>
+
+                <p>{{ message }}</p>
+            </div>
+
+            <button
+                type="button"
+                class="notificacao-fechar"
+                aria-label="Fechar notificação"
+            >×</button>
+
+            <div class="notificacao-progresso"></div>
+        </div>
+    {% endfor %}
+
+    {% if form.errors %}
+        <div class="notificacao error" role="alert">
+            <span class="notificacao-icone">!</span>
+
+            <div class="notificacao-conteudo">
+                <strong>Verifique os dados</strong>
+
+                <ul>
+                    {% for campo, erros in form.errors.items %}
+                        {% for erro in erros %}
+                            <li>{{ erro }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <button
+                type="button"
+                class="notificacao-fechar"
+                aria-label="Fechar notificação"
+            >×</button>
+
+            <div class="notificacao-progresso"></div>
+        </div>
+    {% endif %}
+
+</div>
     <header class="cabecalho">
         <div class="container cabecalho-conteudo">
             <div>
@@ -57,6 +118,7 @@
                             name="nome"
                             maxlength="150"
                             autocomplete="name"
+                            value="{{ form.nome.value|default:'' }}"
                             required
                         >
                     </div>
@@ -69,6 +131,7 @@
                             name="cpf"
                             maxlength="14"
                             placeholder="000.000.000-00"
+                            value="{{ form.cpf.value|default:'' }}"
                             required
                         >
                     </div>
@@ -79,6 +142,8 @@
                             type="date"
                             id="data_nascimento"
                             name="data_nascimento"
+                            max="{% now 'Y-m-d' %}"
+                            value="{{ form.data_nascimento.value|default:'' }}"
                             required
                         >
                     </div>
@@ -86,14 +151,48 @@
                     <div class="campo">
                         <label for="estado_civil">Estado civil *</label>
                         <select id="estado_civil" name="estado_civil" required>
-                            <option value="">Selecione</option>
-                            <option value="Solteiro(a)">Solteiro(a)</option>
-                            <option value="Casado(a)">Casado(a)</option>
-                            <option value="União estável">União estável</option>
-                            <option value="Divorciado(a)">Divorciado(a)</option>
-                            <option value="Viúvo(a)">Viúvo(a)</option>
-                            <option value="Outro">Outro</option>
-                            <option value="Não informado">Não informado</option>
+
+                            <option
+                                value=""
+                                disabled
+                                {% if not form.estado_civil.value %}selected{% endif %}
+                            >Selecione</option>
+
+                            <option
+                                value="Solteiro(a)"
+                                {% if form.estado_civil.value == 'Solteiro(a)' %}selected{% endif %}
+                            >Solteiro(a)</option>
+
+                            <option
+                                value="Casado(a)"
+                                {% if form.estado_civil.value == 'Casado(a)' %}selected{% endif %}
+                            >Casado(a)</option>
+
+                            <option
+                                value="União estável"
+                                {% if form.estado_civil.value == 'União estável' %}selected{% endif %}
+                            >União estável</option>
+
+                            <option
+                                value="Divorciado(a)"
+                                {% if form.estado_civil.value == 'Divorciado(a)' %}selected{% endif %}
+                            >Divorciado(a)</option>
+
+                            <option
+                                value="Viúvo(a)"
+                                {% if form.estado_civil.value == 'Viúvo(a)' %}selected{% endif %}
+                            >Viúvo(a)</option>
+
+                            <option
+                                value="Outro"
+                                {% if form.estado_civil.value == 'Outro' %}selected{% endif %}
+                            >Outro</option>
+
+                            <option
+                                value="Não informado"
+                                {% if form.estado_civil.value == 'Não informado' %}selected{% endif %}
+                            >Não informado</option>
+
                         </select>
                     </div>
 
@@ -106,6 +205,7 @@
                             maxlength="20"
                             autocomplete="tel"
                             placeholder="(21) 99999-9999"
+                            value="{{ form.telefone.value|default:'' }}"
                             required
                         >
                     </div>
@@ -118,6 +218,7 @@
                             name="endereco"
                             maxlength="255"
                             autocomplete="street-address"
+                            value="{{ form.endereco.value|default:'' }}"
                         >
                     </div>
 
@@ -128,6 +229,7 @@
                             id="nome_responsavel"
                             name="nome_responsavel"
                             maxlength="150"
+                            value="{{ form.nome_responsavel.value|default:'' }}"
                         >
                     </div>
 
@@ -148,6 +250,8 @@
                             type="date"
                             id="data_entrada"
                             name="data_entrada"
+                            max="{% now 'Y-m-d' %}"
+                            value="{{ form.data_entrada.value|default:'' }}"
                             required
                         >
                     </div>
@@ -159,9 +263,23 @@
                             name="origem_cadastro"
                             required
                         >
-                            <option value="">Selecione</option>
-                            <option value="presencial">Presencial</option>
-                            <option value="online">Online</option>
+
+                            <option
+                                value=""
+                                disabled
+                                {% if not form.origem_cadastro.value %}selected{% endif %}
+                            >Selecione</option>
+
+                            <option
+                                value="presencial"
+                                {% if form.origem_cadastro.value == 'presencial' %}selected{% endif %}
+                            >Presencial</option>
+
+                            <option
+                                value="online"
+                                {% if form.origem_cadastro.value == 'online' %}selected{% endif %}
+                            >Online</option>
+
                         </select>
                     </div>
 
@@ -189,6 +307,31 @@
     <footer class="rodape">
         Casa Maria de Magdala — Sistema de Gestão Interna
     </footer>
+
+<script>
+    document.querySelectorAll('.notificacao').forEach(function (notificacao) {
+        let temporizador;
+
+        function fecharNotificacao() {
+            clearTimeout(temporizador);
+
+            if (notificacao.classList.contains('saindo')) {
+                return;
+            }
+
+            notificacao.classList.add('saindo');
+
+            notificacao.addEventListener('animationend', function () {
+                notificacao.remove();
+            }, { once: true });
+        }
+
+        notificacao.querySelector('.notificacao-fechar')
+            .addEventListener('click', fecharNotificacao);
+
+        temporizador = setTimeout(fecharNotificacao, 3000);
+    });
+</script>
 
 </body>
 </html>

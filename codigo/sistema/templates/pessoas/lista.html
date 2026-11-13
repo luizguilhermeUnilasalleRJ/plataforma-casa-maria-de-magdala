@@ -1,0 +1,142 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pessoas cadastradas | Casa Maria de Magdala</title>
+
+    <link rel="stylesheet" href="{% static 'css/lista.css' %}">
+</head>
+<body>
+
+    <header class="cabecalho">
+        <div>
+            <h1>Casa Maria de Magdala</h1>
+            <p>Sistema de gerenciamento</p>
+        </div>
+
+        <a href="{% url 'dashboard' %}" class="botao-voltar">
+            Voltar ao painel
+        </a>
+    </header>
+
+    <main class="conteudo">
+
+        <section class="titulo-pagina">
+            <div>
+                <h2>Pessoas cadastradas</h2>
+                <p>Consulte e pesquise os registros cadastrados no sistema.</p>
+            </div>
+
+            <a href="{% url 'cadastrar_pessoa' %}" class="botao-cadastrar">
+                + Cadastrar pessoa
+            </a>
+        </section>
+
+        <section class="cartao">
+
+            <form method="GET" action="{% url 'listar_pessoas' %}" class="form-pesquisa">
+
+                <input
+                    type="search"
+                    name="q"
+                    placeholder="Pesquisar por nome ou CPF..."
+                    value="{{ pesquisa }}"
+                    aria-label="Pesquisar pessoas por nome ou CPF"
+                >
+
+                <select name="status" aria-label="Filtrar por situação do cadastro">
+                    <option value="ativos" {% if status == 'ativos' %}selected{% endif %}>
+                        Cadastros ativos
+                    </option>
+
+                    <option value="inativos" {% if status == 'inativos' %}selected{% endif %}>
+                        Cadastros inativos
+                    </option>
+
+                    <option value="todos" {% if status == 'todos' %}selected{% endif %}>
+                        Todos os cadastros
+                    </option>
+                </select>
+
+                <button type="submit">Filtrar</button>
+
+                {% if pesquisa or status != 'ativos' %}
+                    <a href="{% url 'listar_pessoas' %}" class="botao-limpar">
+                        Limpar
+                    </a>
+                {% endif %}
+
+            </form>
+
+            <div class="resumo">
+                {% if status == 'ativos' %}
+                    <p>Cadastros ativos encontrados: <strong>{{ pessoas|length }}</strong></p>
+                {% elif status == 'inativos' %}
+                    <p>Cadastros inativos encontrados: <strong>{{ pessoas|length }}</strong></p>
+                {% else %}
+                    <p>Total de cadastros encontrados: <strong>{{ pessoas|length }}</strong></p>
+                {% endif %}
+            </div>
+
+
+            <div class="tabela-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th>Telefone</th>
+                            <th>Data de entrada</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for pessoa in pessoas %}
+                            <tr>
+                                <td>
+                                    {{ pessoa.nome }}
+
+                                    {% if not pessoa.ativo %}
+                                        <span class="etiqueta-inativo">Inativo</span>
+                                    {% endif %}
+                                </td>
+
+                                <td>{{ pessoa.cpf }}</td>
+                                <td>{{ pessoa.telefone }}</td>
+                                <td>{{ pessoa.data_entrada|date:"d/m/Y" }}</td>
+                                <td>
+                                    <a
+                                        href="{% url 'detalhes_pessoa' pessoa.id %}"
+                                        class="botao-detalhes"
+                                        title="Visualizar detalhes"
+                                    >
+                                        Ver detalhes
+                                    </a>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="5" class="sem-registros">
+                                    {% if pesquisa %}
+                                        Nenhuma pessoa encontrada para essa pesquisa.
+                                    {% else %}
+                                        Nenhuma pessoa cadastrada até o momento.
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+</html>

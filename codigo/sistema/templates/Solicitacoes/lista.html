@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitações de cadastro</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/solicitacoes.css' %}">
+</head>
+<body>
+    <main>
+        <h1>Solicitações de cadastro</h1>
+        <p>Solicitações aguardando análise da equipe.</p>
+
+        {% if solicitacoes %}
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Data da solicitação</th>
+                            <th>Estado civil</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for solicitacao in solicitacoes %}
+                            <tr>
+                                <td>{{ solicitacao.nome }}</td>
+                                <td>{{ solicitacao.data_solicitacao|date:"d/m/Y H:i" }}</td>
+                                <td>{{ solicitacao.get_estado_civil_display }}</td>
+                                <td>
+                                    <a href="{% url 'detalhes_solicitacao' solicitacao.id %}">
+                                        Visualizar
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="empty-message">Não existem solicitações pendentes.</p>
+        {% endif %}
+    </main>
+</body>
+</html>

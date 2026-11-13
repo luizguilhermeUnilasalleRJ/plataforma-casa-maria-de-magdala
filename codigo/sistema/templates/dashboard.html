@@ -52,7 +52,7 @@
 
         <section class="hero container">
 
-            <h1>Acessos</h1>
+            <h1>Painel Administrativo</h1>
 
         </section>
 
@@ -66,8 +66,10 @@
                     Cadastro de pessoas
                 </button>
 
-                <button>-</button>
-                <button>-</button>
+                <button onclick="window.location.href = '{% url 'listar_pessoas' %}'" >
+                    Listar pessoas
+                </button>
+                <button onclick="window.location.href = '{% url 'listar_solicitacoes' %}'">Solicitações de cadastro</button>
                 <button class="destaque">-</button>
                 <button>-</button>
 
