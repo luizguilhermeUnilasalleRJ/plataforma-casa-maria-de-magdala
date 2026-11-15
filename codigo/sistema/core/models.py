@@ -82,10 +82,25 @@ class Acompanhamento(models.Model):
     )
 
     data_inicio = models.DateField()
-    data_alta = models.DateField(null=True, blank=True)
+
+    # Previsão: pode ser futura.
+    data_alta_prevista = models.DateField(
+        null=True,
+        blank=True
+    )
+
+    # Alta efetiva: quando o acompanhamento realmente termina.
+    data_alta = models.DateField(
+        null=True,
+        blank=True
+    )
 
     observacoes = models.TextField(blank=True)
     data_registro = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def status(self):
+        return 'Encerrado' if self.data_alta else 'Ativo'
 
     def __str__(self):
         return f'{self.pessoa.nome} - {self.especialidades.nome}'

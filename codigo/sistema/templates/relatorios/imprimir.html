@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Relatório geral — Maria de Magdala{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/relatorios.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="pagina-relatorios">
+
+    <div class="acoes-relatorio nao-imprimir">
+        <button type="button" class="botao-relatorio" onclick="window.print()">
+            Imprimir relatório
+        </button>
+
+        <a href="{% url 'dashboard' %}" class="botao-relatorio botao-voltar">
+            Voltar ao painel
+        </a>
+    </div>
+
+    <main class="relatorio-documento">
+
+        <header class="relatorio-cabecalho">
+            <div>
+                <span class="relatorio-identificacao">CASA MARIA DE MAGDALA</span>
+                <h1>Relatório geral</h1>
+                <p>Resumo das atividades e dos registros institucionais.</p>
+            </div>
+
+            <div class="relatorio-data">
+                <span>DATA DE EMISSÃO</span>
+                <strong>{% now "d/m/Y" %}</strong>
+            </div>
+        </header>
+
+        <section class="indicadores-relatorio">
+
+            <article class="indicador-relatorio">
+                <span>Pessoas cadastradas</span>
+                <strong>{{ total_pessoas }}</strong>
+                <small>Registros no sistema</small>
+            </article>
+
+            <article class="indicador-relatorio">
+                <span>Atendimentos</span>
+                <strong>{{ total_atendimentos }}</strong>
+                <small>Atendimentos registrados</small>
+            </article>
+
+            <article class="indicador-relatorio">
+                <span>Acompanhamentos</span>
+                <strong>{{ total_acompanhamentos }}</strong>
+                <small>Acompanhamentos registrados</small>
+            </article>
+
+        </section>
+
+        <section class="secao-relatorio">
+            <div class="titulo-secao-relatorio">
+                <h2>Indicadores gráficos</h2>
+                <span>ANÁLISE DAS ATIVIDADES</span>
+            </div>
+
+            <div class="graficos-relatorio">
+
+                {% if grafico_cadastros %}
+                <article class="grafico-relatorio">
+                    <h3>Cadastros por mês</h3>
+                    <img
+                        src="data:image/png;base64,{{ grafico_cadastros }}"
+                        alt="Gráfico de cadastros por mês"
+                    >
+                </article>
+                {% endif %}
+
+                {% if grafico_atendimentos %}
+                <article class="grafico-relatorio">
+                    <h3>Atendimentos por mês</h3>
+                    <img
+                        src="data:image/png;base64,{{ grafico_atendimentos }}"
+                        alt="Gráfico de atendimentos por mês"
+                    >
+                </article>
+                {% endif %}
+
+                {% if grafico_modalidades %}
+                <article class="grafico-relatorio">
+                    <h3>Atendimentos por modalidade</h3>
+                    <img
+                        src="data:image/png;base64,{{ grafico_modalidades }}"
+                        alt="Gráfico de atendimentos presenciais e online"
+                    >
+                </article>
+                {% endif %}
+
+                {% if grafico_acompanhamentos %}
+                <article class="grafico-relatorio">
+                    <h3>Situação dos acompanhamentos</h3>
+                    <img
+                        src="data:image/png;base64,{{ grafico_acompanhamentos }}"
+                        alt="Gráfico de acompanhamentos ativos e encerrados"
+                    >
+                </article>
+                {% endif %}
+
+            </div>
+        </section>
+
+        <section class="secao-relatorio">
+            <div class="titulo-secao-relatorio">
+                <h2>Pessoas cadastradas</h2>
+                <span>CADASTROS</span>
+            </div>
+
+            <div class="tabela-container">
+                <table class="tabela-relatorio">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Data de entrada</th>
+                            <th>Situação</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for pessoa in pessoas %}
+                        <tr>
+                            <td>{{ pessoa.nome }}</td>
+                            <td>{{ pessoa.data_entrada|date:"d/m/Y" }}</td>
+                            <td>
+                                {% if pessoa.ativo %}
+                                    <span class="status-relatorio status-ativo">Ativa</span>
+                                {% else %}
+                                    <span class="status-relatorio status-inativo">Inativa</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3">Nenhuma pessoa cadastrada.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="secao-relatorio">
+            <div class="titulo-secao-relatorio">
+                <h2>Atendimentos</h2>
+                <span>REGISTROS</span>
+            </div>
+
+            <div class="tabela-container">
+                <table class="tabela-relatorio">
+                    <thead>
+                        <tr>
+                            <th>Pessoa</th>
+                            <th>Data</th>
+                            <th>Modalidade</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for atendimento in atendimentos %}
+                        <tr>
+                            <td>{{ atendimento.pessoa.nome }}</td>
+                            <td>{{ atendimento.data_atendimento|date:"d/m/Y" }}</td>
+                            <td>{{ atendimento.get_modalidade_display }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3">Nenhum atendimento registrado.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="secao-relatorio">
+            <div class="titulo-secao-relatorio">
+                <h2>Acompanhamentos</h2>
+                <span>ACOMPANHAMENTO INSTITUCIONAL</span>
+            </div>
+
+            <div class="tabela-container">
+                <table class="tabela-relatorio">
+                    <thead>
+                        <tr>
+                            <th>Pessoa</th>
+                            <th>Especialidade</th>
+                            <th>Início</th>
+                            <th>Alta prevista</th>
+                            <th>Situação</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for acompanhamento in acompanhamentos %}
+                        <tr>
+                            <td>{{ acompanhamento.pessoa.nome }}</td>
+                            <td>{{ acompanhamento.especialidades.nome }}</td>
+                            <td>{{ acompanhamento.data_inicio|date:"d/m/Y" }}</td>
+                            <td>{{ acompanhamento.data_alta_prevista|date:"d/m/Y"|default:"Não informada" }}</td>
+                            <td>{{ acompanhamento.status }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5">Nenhum acompanhamento registrado.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer class="rodape-relatorio">
+            <span>Casa Maria de Magdala</span>
+            <span>Relatório gerado pelo sistema institucional</span>
+        </footer>
+
+    </main>
+
+</div>
+
+{% endblock %}

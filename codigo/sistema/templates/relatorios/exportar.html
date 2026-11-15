@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Exportar relatórios — Maria de Magdala{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/relatorios.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="pagina-relatorios">
+
+    <div class="cabecalho-relatorio">
+        <h1>Exportar relatórios</h1>
+        <p>Selecione as informações que deseja incluir no arquivo.</p>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="card-relatorio">
+            <h2>Informações disponíveis</h2>
+
+            <div class="lista-dados">
+
+                <label class="opcao-dado">
+                    <input type="checkbox" name="dados" value="pessoas">
+                    Pessoas cadastradas
+                </label>
+
+                <label class="opcao-dado">
+                    <input type="checkbox" name="dados" value="atendimentos">
+                    Atendimentos realizados
+                </label>
+
+                <label class="opcao-dado">
+                    <input type="checkbox" name="dados" value="acompanhamentos">
+                    Acompanhamentos
+                </label>
+
+                <label class="opcao-dado">
+                    <input type="checkbox" name="dados" value="altas">
+                    Altas registradas
+                </label>
+
+            </div>
+        </div>
+
+        <div class="acoes-relatorio">
+            <button type="submit" class="botao-relatorio">
+                Gerar arquivo
+            </button>
+
+            <a href="{% url 'dashboard' %}" class="botao-relatorio botao-voltar">
+                Voltar ao painel
+            </a>
+        </div>
+
+    </form>
+
+</section>
+{% endblock %}

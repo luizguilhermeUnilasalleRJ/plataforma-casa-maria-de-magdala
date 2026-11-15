@@ -50,12 +50,13 @@
                     Editar cadastro
                 </a>
 
-                <form method="POST" action="{% url 'alterar_status_pessoa' pessoa.id %}"
+                <form method="POST"
+                      action="{% url 'alterar_status_pessoa' pessoa.id %}"
                       onsubmit="return confirm('Tem certeza que deseja alterar o status desse cadastro?');">
 
                     {% csrf_token %}
 
-                    <button type="submit" class = 'botao-status'>
+                    <button type="submit" class="botao-status">
                         {% if pessoa.ativo %}
                             Inativar cadastro
                         {% else %}
@@ -63,9 +64,7 @@
                         {% endif %}
                     </button>
                 </form>
-
             </div>
-
         </section>
 
         <section class="cartao">
@@ -119,7 +118,9 @@
 
         </section>
 
-                <section class="cartao historico-atendimentos">
+        <!-- HISTÓRICO DE ATENDIMENTOS -->
+
+        <section class="cartao historico-atendimentos">
 
             <div class="titulo-pagina">
                 <div>
@@ -128,13 +129,15 @@
                 </div>
 
                 {% if pessoa.ativo %}
-                    <a href="{% url 'cadastrar_atendimento' %}" class="botao-cadastrar">
+                    <a href="{% url 'cadastrar_atendimento_pessoa' pessoa.id %}"
+                       class="botao-cadastrar">
                         Novo atendimento
                     </a>
                 {% endif %}
             </div>
 
             {% if atendimentos %}
+
                 <div class="tabela-container">
                     <table>
                         <thead>
@@ -142,13 +145,16 @@
                                 <th>Data</th>
                                 <th>Modalidade</th>
                                 <th>Observações</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
 
                         <tbody>
                             {% for atendimento in atendimentos %}
                                 <tr>
-                                    <td>{{ atendimento.data_atendimento|date:"d/m/Y" }}</td>
+                                    <td>
+                                        {{ atendimento.data_atendimento|date:"d/m/Y" }}
+                                    </td>
 
                                     <td>
                                         {{ atendimento.get_modalidade_display }}
@@ -156,6 +162,13 @@
 
                                     <td>
                                         {{ atendimento.observacoes|default:"Sem observações" }}
+                                    </td>
+
+                                    <td>
+                                        <a href="{% url 'editar_atendimento' atendimento.id %}"
+                                           class="botao-editar">
+                                            Editar
+                                        </a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -169,6 +182,8 @@
 
         </section>
 
+        <!-- HISTÓRICO DE ACOMPANHAMENTOS -->
+
         <section class="cartao historico-acompanhamentos">
 
             <div class="historico-cabecalho">
@@ -178,7 +193,8 @@
                 </div>
 
                 {% if pessoa.ativo %}
-                    <a href="{% url 'cadastrar_acompanhamento' %}" class="botao-cadastrar">
+                    <a href="{% url 'cadastrar_acompanhamento_pessoa' pessoa.id %}"
+                       class="botao-cadastrar">
                         Novo acompanhamento
                     </a>
                 {% endif %}
@@ -193,20 +209,30 @@
                         <article class="acompanhamento-item">
 
                             <div class="acompanhamento-titulo">
-                                <h3>{{ acompanhamento.especialidades.nome }}</h3>
 
-                                {% if acompanhamento.data_alta %}
+                                {% if acompanhamento.status == 'Encerrado' %}
                                     <span class="status-acompanhamento encerrado">
                                         Encerrado
                                     </span>
                                 {% else %}
                                     <span class="status-acompanhamento andamento">
-                                        Em andamento
+                                        Ativo
                                     </span>
                                 {% endif %}
+
+                                <a href="{% url 'editar_acompanhamento' acompanhamento.id %}"
+                                   class="botao-editar">
+                                    Editar acompanhamento
+                                </a>
+
                             </div>
 
                             <div class="acompanhamento-dados">
+
+                                <div>
+                                    <strong>Nome da especialidade</strong>
+                                    <p>{{ acompanhamento.especialidades.nome }}</p>
+                                </div>
 
                                 <div>
                                     <strong>Categoria</strong>
@@ -219,7 +245,18 @@
                                 </div>
 
                                 <div>
-                                    <strong>Data de alta</strong>
+                                    <strong>Previsão de alta</strong>
+                                    <p>
+                                        {% if acompanhamento.data_alta_prevista %}
+                                            {{ acompanhamento.data_alta_prevista|date:"d/m/Y" }}
+                                        {% else %}
+                                            Não definida
+                                        {% endif %}
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <strong>Data efetiva de alta</strong>
                                     <p>
                                         {% if acompanhamento.data_alta %}
                                             {{ acompanhamento.data_alta|date:"d/m/Y" }}

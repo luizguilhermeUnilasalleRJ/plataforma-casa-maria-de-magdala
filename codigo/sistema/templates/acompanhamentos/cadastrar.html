@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Novo acompanhamento | Maria de Magdala{% endblock %}
+{% block title %}
+    {% if edicao %}Editar acompanhamento{% else %}Novo acompanhamento{% endif %} | Maria de Magdala
+{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/formularios.css' %}">
@@ -10,8 +12,13 @@
 {% block content %}
 
 <section class="hero container">
-    <h1>Novo acompanhamento</h1>
-    <p>Registre o acompanhamento da pessoa em uma especialidade.</p>
+    {% if edicao %}
+        <h1>Editar acompanhamento</h1>
+        <p>Altere os dados e atualize as informações do acompanhamento.</p>
+    {% else %}
+        <h1>Novo acompanhamento</h1>
+        <p>Vincule uma pessoa a uma especialidade e registre o início do acompanhamento.</p>
+    {% endif %}
 </section>
 
 <div class="divisor container"></div>
@@ -27,12 +34,22 @@
 
         <div class="formulario-acoes">
             <button type="submit" class="botao-salvar">
-                Salvar acompanhamento
+                {% if edicao %}
+                    Salvar alterações
+                {% else %}
+                    Salvar acompanhamento
+                {% endif %}
             </button>
 
-            <a class="formulario-voltar" href="{% url 'dashboard' %}">
-                Voltar ao painel
-            </a>
+            {% if edicao %}
+                <a class="formulario-voltar" href="{% url 'detalhes_pessoa' form.instance.pessoa.id %}">
+                    Voltar
+                </a>
+            {% else %}
+                <a class="formulario-voltar" href="{% url 'dashboard' %}">
+                    Voltar ao painel
+                </a>
+            {% endif %}
         </div>
     </form>
 

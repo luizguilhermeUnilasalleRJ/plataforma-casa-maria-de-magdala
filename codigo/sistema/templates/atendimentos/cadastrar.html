@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Novo atendimento | Maria de Magdala{% endblock %}
+{% block title %}
+    {% if edicao %}Editar atendimento{% else %}Novo atendimento{% endif %} | Maria de Magdala
+{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/formularios.css' %}">
@@ -10,8 +12,13 @@
 {% block content %}
 
 <section class="hero container">
-    <h1>Novo atendimento</h1>
-    <p>Registre um atendimento realizado pela instituição.</p>
+    {% if edicao %}
+        <h1>Editar atendimento</h1>
+        <p>Atualize as informações de um atendimento registrado.</p>
+    {% else %}
+        <h1>Novo atendimento</h1>
+        <p>Registre um atendimento realizado pela instituição.</p>
+    {% endif %}
 </section>
 
 <div class="divisor container"></div>
@@ -27,12 +34,22 @@
 
         <div class="formulario-acoes">
             <button type="submit" class="botao-salvar">
-                Salvar atendimento
+                {% if edicao %}
+                    Salvar alterações
+                {% else %}
+                    Salvar atendimento
+                {% endif %}
             </button>
 
-            <a class="formulario-voltar" href="{% url 'dashboard' %}">
-                Voltar ao painel
-            </a>
+            {% if edicao %}
+                <a class="formulario-voltar" href="{% url 'detalhes_pessoa' form.instance.pessoa.id %}">
+                    Voltar
+                </a>
+            {% else %}
+                <a class="formulario-voltar" href="{% url 'dashboard' %}">
+                    Voltar ao painel
+                </a>
+            {% endif %}
         </div>
     </form>
 

@@ -230,3 +230,34 @@ section p {
         padding: 10px;
     }
 }
+
+/* BOTÃO VOLTAR AO PAINEL */
+
+a.botao-voltar,
+a.botao-voltar:visited {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 11px 20px;
+
+    background: #1a4fb4 !important;
+    color: #ffffff !important;
+
+    border: 1px solid #1a4fb4;
+    border-radius: 7px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none !important;
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+a.botao-voltar:hover {
+    background: #123a86 !important;
+    color: #ffffff !important;
+    border-color: #123a86;
+}

@@ -176,23 +176,30 @@ class AcompanhamentoForm(forms.ModelForm):
             'pessoa',
             'especialidades',
             'data_inicio',
+            'data_alta_prevista',
             'data_alta',
             'observacoes',
         ]
 
         widgets = {
-            'pessoa': forms.Select(attrs={'data-placeholder': 'Selecione uma pessoa'}),
-            'especialidades': forms.Select(attrs={'data-placeholder': 'Selecione uma especialidade'}),
+            'pessoa': forms.Select(
+                attrs={'data-placeholder': 'Selecione uma pessoa'}
+            ),
+            'especialidades': forms.Select(
+                attrs={'data-placeholder': 'Selecione uma atividade'}
+            ),
             'data_inicio': forms.DateInput(attrs={'type': 'date'}),
+            'data_alta_prevista': forms.DateInput(attrs={'type': 'date'}),
             'data_alta': forms.DateInput(attrs={'type': 'date'}),
             'observacoes': forms.Textarea(attrs={'rows': 4}),
         }
 
         labels = {
             'pessoa': 'Pessoa',
-            'especialidades': 'Especialidade',
+            'especialidades': 'Atividade',
             'data_inicio': 'Data de início',
-            'data_alta': 'Data de alta',
+            'data_alta_prevista': 'Data prevista de alta',
+            'data_alta': 'Data efetiva de alta',
             'observacoes': 'Observações',
         }
 
@@ -221,19 +228,27 @@ class AcompanhamentoForm(forms.ModelForm):
         cleaned_data = super().clean()
 
         data_inicio = cleaned_data.get('data_inicio')
-        data_alta = cleaned_data.get('data_alta')
+        data_prevista = cleaned_data.get('data_alta_prevista')
+        data_efetiva = cleaned_data.get('data_alta')
 
-        if data_inicio and data_alta:
-            if data_alta < data_inicio:
+        if data_inicio and data_prevista:
+            if data_prevista < data_inicio:
                 self.add_error(
-                    'data_alta',
-                    'A data de alta não pode ser anterior à data de início.'
+                    'data_alta_prevista',
+                    'A previsão de alta não pode ser anterior ao início.'
                 )
 
-            if data_alta > date.today():
+        if data_inicio and data_efetiva:
+            if data_efetiva < data_inicio:
                 self.add_error(
                     'data_alta',
-                    'A data de alta não pode ser futura.'
+                    'A alta efetiva não pode ser anterior ao início.'
+                )
+
+            if data_efetiva > date.today():
+                self.add_error(
+                    'data_alta',
+                    'A alta efetiva não pode ser futura.'
                 )
 
         return cleaned_data

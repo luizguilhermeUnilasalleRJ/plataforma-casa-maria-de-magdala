@@ -1,0 +1,469 @@
+/* =====================================
+   RELATÓRIOS — CASA MARIA DE MAGDALA
+===================================== */
+
+.pagina-relatorios {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 24px;
+}
+
+.cabecalho-relatorio {
+    margin-bottom: 30px;
+}
+
+.cabecalho-relatorio h1 {
+    font-size: 28px;
+    color: #243b53;
+    margin-bottom: 8px;
+}
+
+.cabecalho-relatorio p {
+    color: #64748b;
+    font-size: 15px;
+}
+
+/* CARDS */
+
+.card-relatorio {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.card-relatorio h2 {
+    font-size: 19px;
+    color: #243b53;
+    margin-bottom: 18px;
+}
+
+/* SELEÇÃO DE DADOS */
+
+.lista-dados {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.opcao-dado {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #334155;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.opcao-dado input {
+    width: 17px;
+    height: 17px;
+    accent-color: #2563eb;
+}
+
+/* BOTÕES */
+
+.acoes-relatorio {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.botao-relatorio {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 20px;
+    border: none;
+    border-radius: 7px;
+    background: #2563eb;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.botao-relatorio:hover {
+    background: #1d4ed8;
+}
+
+.botao-voltar {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.botao-voltar:hover {
+    background: #cbd5e1;
+}
+
+/* INDICADORES */
+
+.indicadores-relatorio {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.indicador-relatorio {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 22px;
+}
+
+.indicador-relatorio span {
+    display: block;
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.indicador-relatorio strong {
+    color: #243b53;
+    font-size: 28px;
+}
+
+/* TABELAS */
+
+.tabela-relatorio {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.tabela-relatorio th,
+.tabela-relatorio td {
+    padding: 13px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.tabela-relatorio th {
+    background: #f1f5f9;
+    color: #334155;
+    font-weight: 600;
+}
+
+.tabela-relatorio td {
+    color: #475569;
+}
+
+.tabela-relatorio tr:hover td {
+    background: #f8fafc;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 700px) {
+    .indicadores-relatorio {
+        grid-template-columns: 1fr;
+    }
+
+    .pagina-relatorios {
+        padding: 0 15px;
+    }
+
+    .card-relatorio {
+        padding: 18px;
+    }
+
+    .tabela-relatorio {
+        font-size: 12px;
+    }
+
+    .tabela-relatorio th,
+    .tabela-relatorio td {
+        padding: 10px 8px;
+    }
+}
+
+/* IMPRESSÃO */
+
+@media print {
+    body {
+        background: white !important;
+    }
+
+    .barra-institucional,
+    .navegacao,
+    footer,
+    .acoes-relatorio,
+    .nao-imprimir {
+        display: none !important;
+    }
+
+    .pagina-relatorios {
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .card-relatorio,
+    .indicador-relatorio {
+        border: 1px solid #ccc;
+        break-inside: avoid;
+    }
+
+    .tabela-relatorio th {
+        background: #eeeeee !important;
+        print-color-adjust: exact;
+    }
+}
+
+/* RELATÓRIO INSTITUCIONAL */
+
+.relatorio-documento {
+    max-width: 1100px;
+    margin: 25px auto 50px;
+    padding: 38px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.relatorio-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.relatorio-identificacao {
+    color: #2563eb;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.relatorio-cabecalho h1 {
+    color: #243b53;
+    font-size: 30px;
+    margin: 10px 0;
+}
+
+.relatorio-cabecalho p {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.relatorio-data {
+    min-width: 140px;
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 8px;
+}
+
+.relatorio-data span,
+.relatorio-data strong {
+    display: block;
+}
+
+.relatorio-data span {
+    color: #64748b;
+    font-size: 10px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.relatorio-data strong {
+    color: #243b53;
+    font-size: 16px;
+}
+
+.relatorio-documento .indicadores-relatorio {
+    margin: 28px 0 35px;
+}
+
+.relatorio-documento .indicador-relatorio {
+    border-radius: 9px;
+    padding: 20px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+}
+
+.relatorio-documento .indicador-relatorio span {
+    color: #64748b;
+    font-size: 13px;
+}
+
+.relatorio-documento .indicador-relatorio strong {
+    display: block;
+    color: #243b53;
+    font-size: 30px;
+    margin: 8px 0;
+}
+
+.relatorio-documento .indicador-relatorio small {
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+.titulo-secao-relatorio {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.titulo-secao-relatorio h2 {
+    color: #243b53;
+    font-size: 19px;
+}
+
+.titulo-secao-relatorio span {
+    color: #94a3b8;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.relatorio-documento .secao-relatorio {
+    margin-top: 35px;
+}
+
+.tabela-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.relatorio-documento .tabela-relatorio {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.relatorio-documento .tabela-relatorio th {
+    background: #f1f5f9;
+    color: #334155;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+}
+
+.relatorio-documento .tabela-relatorio td {
+    color: #475569;
+    font-size: 13px;
+}
+
+.status-relatorio {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.status-ativo {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status-inativo {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.rodape-relatorio {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 40px;
+    padding-top: 18px;
+    border-top: 1px solid #e2e8f0;
+    color: #94a3b8;
+    font-size: 11px;
+}
+
+@media (max-width: 700px) {
+    .relatorio-documento {
+        padding: 20px;
+    }
+
+    .relatorio-cabecalho {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .relatorio-data {
+        width: 100%;
+    }
+
+    .rodape-relatorio {
+        flex-direction: column;
+    }
+}
+
+@media print {
+    .relatorio-documento {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        border: none;
+        border-radius: 0;
+    }
+
+    .relatorio-documento .secao-relatorio {
+        break-inside: auto;
+    }
+
+    .relatorio-documento tr {
+        break-inside: avoid;
+    }
+
+    .nao-imprimir {
+        display: none !important;
+    }
+}
+
+.graficos-relatorio {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    margin-top: 20px;
+}
+
+.grafico-relatorio {
+    min-width: 0;
+    padding: 18px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: #fff;
+    break-inside: avoid;
+}
+
+.grafico-relatorio h3 {
+    margin: 0 0 12px;
+    font-size: 15px;
+    color: #263b35;
+}
+
+.grafico-relatorio img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+@media (max-width: 700px) {
+    .graficos-relatorio {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media print {
+    .graficos-relatorio {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grafico-relatorio {
+        break-inside: avoid;
+    }
+}
+
+

@@ -1,133 +1,126 @@
 {% load static %}
 
 <!DOCTYPE html>
-
 <html lang="pt-br">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Área Restrita</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Casa Maria de Magdala</title>
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
-
 </head>
-
 
 <body>
 
-    <main class="pagina-login">
+<main class="pagina-login">
 
+    <section class="area-formulario">
 
+        <div class="cartao-login">
 
-
-        <section class="area-login">
-
-            <div class="conteudo-login">
-
-
-
-                <div class="indicador"></div>
-
-
-
-
-                <h1>
-                    Área Restrita
-                </h1>
-
-
-
-
-                <form
-                    method="POST"
-                    class="formulario-login"
-                >
-
-
-                    {% csrf_token %}
-
-
-
-                    <div class="campo">
-
-                        <label for="usuario">
-                            Usuário
-                        </label>
-
-                        <input
-                            type="text"
-                            id="usuario"
-                            name="username"
-                            autocomplete="username"
-                        >
-
-                    </div>
-
-
-
-
-                    <div class="campo">
-
-                        <div class="senha-cabecalho">
-
-                            <label for="senha">
-                                Senha
-                            </label>
-
-                            <button
-                                type="button"
-                                class="mostrar-senha"
-                            >
-                                ◉&nbsp; Esconder
-                            </button>
-
-                        </div>
-
-
-                        <input
-                            type="password"
-                            id="senha"
-                            name="password"
-                            autocomplete="current-password"
-                        >
-
-                    </div>
-
-
-
-                    <button
-                        type="submit"
-                        class="botao-acessar"
-                    >
-                        Acessar
-                    </button>
-
-
-                </form>
-
+            <div class="cabecalho-login">
+                <span class="marca-institucional">CM</span>
+                <h1>Casa Maria de Magdala</h1>
+                <p>Sistema de Gestão Institucional</p>
             </div>
 
-        </section>
+            <div class="titulo-login">
+                <h2>Área restrita</h2>
+                <p>Informe suas credenciais para continuar.</p>
+            </div>
 
+            {% if form.errors %}
+                <div class="mensagem-erro" role="alert">
+                    Usuário ou senha incorretos. Verifique os dados e tente novamente.
+                </div>
+            {% endif %}
 
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="mensagem-erro" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
 
-        <section class="area-visual">
+            <form method="POST" class="formulario-login">
+                {% csrf_token %}
 
-            <img
-                src=""
-                alt="alguma coisa"
-            >
+                <div class="campo">
+                    <label for="usuario">Usuário</label>
+                    <input
+                        type="text"
+                        id="usuario"
+                        name="username"
+                        placeholder="Digite seu usuário"
+                        autocomplete="username"
+                        required
+                        autofocus
+                    >
+                </div>
 
-        </section>
+                <div class="campo">
+                    <div class="cabecalho-senha">
+                        <label for="senha">Senha</label>
 
+                        <button
+                            type="button"
+                            id="alternarSenha"
+                            class="mostrar-senha"
+                            aria-label="Mostrar senha"
+                            aria-pressed="false"
+                        >
+                            Mostrar
+                        </button>
+                    </div>
 
-    </main>
+                    <input
+                        type="password"
+                        id="senha"
+                        name="password"
+                        placeholder="Digite sua senha"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="botao-acessar">
+                    Entrar
+                </button>
+
+            </form>
+
+            <footer class="rodape-login">
+                Acesso exclusivo aos colaboradores autorizados.
+            </footer>
+
+        </div>
+
+    </section>
+
+    <section class="area-imagem">
+        <img
+            src="{% static 'images/ong-login.jfif' %}"
+            alt="Casa Maria de Magdala"
+        >
+    </section>
+
+</main>
+
+<script>
+    const campoSenha = document.getElementById("senha");
+    const alternarSenha = document.getElementById("alternarSenha");
+
+    alternarSenha.addEventListener("click", function () {
+        const mostrar = campoSenha.type === "password";
+
+        campoSenha.type = mostrar ? "text" : "password";
+        alternarSenha.textContent = mostrar ? "Ocultar" : "Mostrar";
+        alternarSenha.setAttribute("aria-label",
+            mostrar ? "Ocultar senha" : "Mostrar senha"
+        );
+        alternarSenha.setAttribute("aria-pressed", String(mostrar));
+    });
+</script>
 
 </body>
-
 </html>

@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Acesso a Sistemas</title>
+    <title>Painel Administrativo | Maria de Magdala</title>
 
     <link rel="stylesheet" href="{% static 'css/sistema.css' %}">
 </head>
@@ -25,24 +25,17 @@
         <div class="container nav-conteudo">
 
             <div class="logo">
-
                 <div class="logo-caixa"></div>
 
                 <span>
                     Magdala
                     <span class="logo-secundario">/ PORTAL</span>
                 </span>
-
             </div>
 
             <div class="usuario">
-
                 <div class="usuario-icone">◉</div>
-
-                <span>
-                    {{ request.user.username }}
-                </span>
-
+                <span>{{ request.user.username }}</span>
             </div>
 
         </div>
@@ -51,45 +44,98 @@
     <main>
 
         <section class="hero container">
-
             <h1>Painel Administrativo</h1>
-
+            <p>Visão geral dos cadastros, atendimentos e atividades da instituição.</p>
         </section>
 
         <div class="divisor container"></div>
 
+        <!-- Informações rápidas -->
+
+        <section class="informacoes-rapidas container">
+
+            <h2>Informações rápidas</h2>
+
+            <div class="indicadores">
+
+                <div class="indicador">
+                    <span class="indicador-titulo">Pessoas cadastradas</span>
+                    <strong>{{ indicadores.total_pessoas }}</strong>
+                </div>
+
+                <div class="indicador">
+                    <span class="indicador-titulo">Pessoas ativas</span>
+                    <strong>{{ indicadores.pessoas_ativas }}</strong>
+                </div>
+
+                <div class="indicador">
+                    <span class="indicador-titulo">Atendimentos realizados</span>
+                    <strong>{{ indicadores.total_atendimentos }}</strong>
+                </div>
+
+                <div class="indicador">
+                    <span class="indicador-titulo">Solicitações pendentes</span>
+                    <strong>{{ indicadores.solicitacoes_pendentes }}</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Gerenciamento -->
+
         <section class="destaques container">
+
+            <h2>Gerenciamento</h2>
 
             <div class="cards">
 
-                <button onclick="window.location.href = '{% url 'cadastrar_pessoa' %}'" >
+                <button onclick="window.location.href='{% url 'cadastrar_pessoa' %}'">
                     Cadastro de pessoas
                 </button>
 
-                <button onclick="window.location.href = '{% url 'listar_pessoas' %}'" >
+                <button onclick="window.location.href='{% url 'listar_pessoas' %}'">
                     Listar pessoas
                 </button>
-                <button onclick="window.location.href = '{% url 'listar_solicitacoes' %}'">Solicitações de cadastro</button>
-                <button class="destaque">-</button>
-                <button>-</button>
 
-                <button>-</button>
-                <button>-</button>
-                <button>-</button>
-                <button>-</button>
-                <button>-</button>
+                <button onclick="window.location.href='{% url 'listar_solicitacoes' %}'">
+                    Solicitações de cadastro
+                </button>
 
-                <button>-</button>
-                <button>-</button>
-                <button>-</button>
-                <button>-</button>
-                <button>-</button>
+                <button onclick="window.location.href='{% url 'cadastrar_atendimento' %}'">
+                    Registrar atendimento
+                </button>
 
-                <button>-</button>
-                <button>-</button>
-                <button>-</button>
-                <button>-</button>
-                <button>-</button>
+                <button onclick="window.location.href='{% url 'cadastrar_acompanhamento' %}'">
+                    Registrar acompanhamento
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- Relatórios e exportações -->
+
+        <section class="destaques container">
+
+            <h2>Relatórios e exportações</h2>
+
+            <div class="cards">
+
+                <button
+                    onclick="window.location.href='{% url 'exportar_dados' %}?formato=excel'">
+                    Exportar para Excel
+                </button>
+
+                <button
+                    onclick="window.location.href='{% url 'exportar_dados' %}?formato=word'">
+                    Exportar para Word
+                </button>
+
+                <button
+                    onclick="window.location.href='{% url 'relatorio_impressao' %}'">
+                    Imprimir relatórios
+                </button>
 
             </div>
 
@@ -102,17 +148,15 @@
         <div class="container footer-conteudo">
 
             <p>
-                © 2024 Portal Corporativo.
+                © 2026 Portal Maria de Magdala.
                 Todos os direitos reservados.
-                Ambiente de acesso restrito e monitorado.
+                Ambiente de acesso restrito.
             </p>
 
             <div class="links-footer">
-
                 <a href="#">Política de Privacidade</a>
                 <a href="#">Suporte</a>
                 <a href="#">Termos de Uso</a>
-
             </div>
 
         </div>

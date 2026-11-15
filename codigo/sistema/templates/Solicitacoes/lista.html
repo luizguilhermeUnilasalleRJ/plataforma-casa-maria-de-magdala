@@ -43,6 +43,9 @@
         {% else %}
             <p class="empty-message">Não existem solicitações pendentes.</p>
         {% endif %}
+        <a href="{% url 'dashboard' %}" class="botao-voltar">
+            Voltar ao painel
+        </a>
     </main>
 </body>
 </html>
