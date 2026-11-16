@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.generic import RedirectView
 
 from .views import (
     login_view,
@@ -20,10 +21,12 @@ from .views import (
     recusar_solicitacao,
     exportar_dados,
     relatorio_impressao,
-
 )
 
 urlpatterns = [
+    # PÁGINA INICIAL
+    path('', RedirectView.as_view(url='/login/', permanent=False), name='home'),
+
     # AUTENTICAÇÃO E DASHBOARD
     path('login/', login_view, name='login'),
     path('dashboard/', dashboard, name='dashboard'),
@@ -52,7 +55,8 @@ urlpatterns = [
     path('solicitacoes/<int:solicitacao_id>/', detalhes_solicitacao, name='detalhes_solicitacao'),
     path('solicitacoes/<int:solicitacao_id>/aprovar/', aprovar_solicitacao, name='aprovar_solicitacao'),
     path('solicitacoes/<int:solicitacao_id>/recusar/', recusar_solicitacao, name='recusar_solicitacao'),
+
+    # RELATÓRIOS
     path('relatorios/exportar/', exportar_dados, name='exportar_dados'),
     path('relatorios/imprimir/', relatorio_impressao, name='relatorio_impressao'),
 ]
-
