@@ -98,7 +98,7 @@ def solicitar_cadastro(request):
 
     return render(
         request,
-        'solicitacoes/cadastro.html',
+        'Solicitacoes/cadastro.html',
         {'form': form}
     )
 
@@ -106,7 +106,7 @@ def solicitar_cadastro(request):
 def solicitacao_enviada(request):
     return render(
         request,
-        'solicitacoes/confirmacao.html'
+        'Solicitacoes/confirmacao.html'
     )
 
 
@@ -445,7 +445,7 @@ def listar_solicitacoes(request):
 
     return render(
         request,
-        'solicitacoes/lista.html',
+        'Solicitacoes/lista.html',
         {'solicitacoes': solicitacoes}
     )
 
@@ -459,7 +459,7 @@ def detalhes_solicitacao(request, solicitacao_id):
 
     return render(
         request,
-        'solicitacoes/detalhes.html',
+        'Solicitacoes/detalhes.html',
         {'solicitacao': solicitacao}
     )
 
